@@ -1,0 +1,33 @@
+omnicuris e-commerce assignment
+
+- customer
+  - email, primary
+  - role
+  - details
+    - fnmae
+    - lname
+    - contact
+- address
+  - id
+  - customer id
+  - tag
+- inventory
+  - item id
+  - qty
+  - last updated
+- item
+  - id, uuid, primary
+  - name
+  - description
+  - price
+  - searchable tags (0.*)
+  - added date
+- order
+  - id
+  - item id (1.*)
+  - address id
+  - customerid
+- transaction
+  - id
+  - order id
+  - mode
