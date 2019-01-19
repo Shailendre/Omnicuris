@@ -11,9 +11,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+
+@Setter
+@Getter
 @Entity
 @Table(name = "t_transaction")
 @EntityListeners(AuditingEntityListener.class)
@@ -23,10 +28,12 @@ public class Transaction {
   @GeneratedValue
   private Long id;
 
-  @OneToMany(mappedBy = "transaction_id", targetEntity = Order.class)
+  @OneToMany(targetEntity = Order.class)
   private List<Order> orders;
 
   private String mode = "UPI";
+
+  private TransactionStatus status;
 
   @Column(nullable = false, updatable = false)
   @CreatedDate

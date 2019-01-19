@@ -22,16 +22,15 @@ public class Customer {
 	private Long id;
 
 	@Column(unique = true)
-	private String email_id;
+  private String emailId;
 
-	private String role;
-	private String f_name;
-	private String l_name;
+  private String fName;
+  private String lName;
 	private String contact;
 
-	@OneToMany(mappedBy = "customer_id", targetEntity = Address.class)
+  @OneToMany(targetEntity = Address.class)
 	private List<Address> addresses;
 
-	@OneToMany(mappedBy = "customer_id", targetEntity = Order.class)
+  @OneToMany(targetEntity = Order.class)
 	private List<Order> orders;
 }

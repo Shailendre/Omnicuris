@@ -6,9 +6,10 @@ import com.omnicuris.ecommerce.model.item.Item;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -29,20 +30,23 @@ public class Order {
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name = "item_id")
-  private Item item_id;
+  private Item itemId;
 
   @OneToOne(targetEntity = Address.class)
-  @JoinColumn(name = "address_id")
-  private Address address_id;
+  private Address addrId;
 
   @ManyToOne(targetEntity = Customer.class)
-  @JoinColumn(name = "customer_id")
-  private Customer customer_id;
+  private Customer custId;
+
+  @Enumerated(value = EnumType.STRING)
+  private OrderStatus status;
 
   @ManyToOne(targetEntity = Transaction.class)
-  @JoinColumn(name = "transaction_id")
-  private Transaction transaction_id;
+  private Transaction transId;
+
+  private Integer itemQty;
+  private Double orderTotal;
+
 
   @Column(nullable = false, updatable = false)
   @CreatedDate

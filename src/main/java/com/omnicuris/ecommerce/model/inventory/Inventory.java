@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,10 +28,9 @@ public class Inventory {
   private Long id;
 
   @OneToOne(targetEntity = Item.class)
-  @JoinColumn(name = "item_id")
-  private Item item_id;
+  private Item itemId;
 
-  private Long qty;
+  private Integer qty;
 
   @Column(nullable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)

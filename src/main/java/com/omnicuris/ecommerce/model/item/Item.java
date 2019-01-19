@@ -1,5 +1,6 @@
 package com.omnicuris.ecommerce.model.item;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.omnicuris.ecommerce.model.inventory.Inventory;
 import com.omnicuris.ecommerce.model.order.Order;
 import java.util.Date;
@@ -7,6 +8,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -31,18 +33,23 @@ public class Item {
   @Id
   @GeneratedValue
   private Long id;
-  @NotBlank private String name;
+
+  @Column(unique = true)
+  @NotBlank
+  private String name;
+
   private String description;
 
   private Double price;
 
-  @OneToOne(mappedBy = "item_id", targetEntity = Inventory.class)
+  @JsonIgnore
+  @OneToOne(targetEntity = Inventory.class, fetch = FetchType.LAZY)
   private Inventory inventory;
 
-  @OneToMany(mappedBy = "item_id", targetEntity = Order.class)
+  @JsonIgnore
+  @OneToMany(targetEntity = Order.class, fetch = FetchType.LAZY)
   private List<Order> orders;
 
-  @Column(nullable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   @CreatedDate
   private Date createdAt;
