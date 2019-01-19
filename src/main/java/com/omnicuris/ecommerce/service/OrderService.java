@@ -134,4 +134,13 @@ public class OrderService {
               "Invalid quantity for item id" + item.getId() + ". Can be between 1-" + inStockItems);
     }
   }
+
+  public Order findById(Long id) throws ServiceResponseException {
+    return orderRepository
+        .findById(id)
+        .orElseThrow(
+            () ->
+                ServiceResponseException.status(HttpStatus.NOT_FOUND)
+                    .message("No order found with id " + id));
+  }
 }

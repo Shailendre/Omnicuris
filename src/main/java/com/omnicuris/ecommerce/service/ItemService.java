@@ -4,6 +4,7 @@ import com.omnicuris.ecommerce.error.ServiceResponseException;
 import com.omnicuris.ecommerce.model.item.Item;
 import com.omnicuris.ecommerce.model.item.UpdateItemRequest;
 import com.omnicuris.ecommerce.repository.ItemRepository;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,6 +60,9 @@ public class ItemService {
     item.setPrice(updateItemRequest.getPrice());
 
     return itemRepository.save(item);
+  }
 
+  public List<Item> findAll() {
+    return itemRepository.findAll();
   }
 }

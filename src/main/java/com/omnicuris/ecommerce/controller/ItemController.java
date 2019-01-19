@@ -57,4 +57,11 @@ public class ItemController {
       return ResponseEntity.status(e.getStatus()).body(new MessageResponse(e.getMessage()));
     }
   }
+
+  @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+  @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity findAll() {
+    return ResponseEntity.ok(itemService.findAll());
+  }
+
 }

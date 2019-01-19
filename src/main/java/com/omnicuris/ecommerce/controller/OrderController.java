@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/order")
-@PreAuthorize("hasRole('USER')")
 public class OrderController {
 
   @Autowired
@@ -28,6 +28,7 @@ public class OrderController {
   @Autowired
   private TransactionService transactionService;
 
+  @PreAuthorize("hasRole('USER')")
   @PostMapping(
       value = "/add/cart",
       consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -42,6 +43,7 @@ public class OrderController {
     return ResponseEntity.ok(orderService.addToCart(orderRequests));
   }
 
+  @PreAuthorize("hasRole('USER')")
   @PutMapping(
       value = "/edit/cart/{id}",
       consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -56,6 +58,7 @@ public class OrderController {
     }
   }
 
+  @PreAuthorize("hasRole('USER')")
   @PostMapping(
       value = "/buy",
       consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -67,5 +70,15 @@ public class OrderController {
       return ResponseEntity.status(e.getStatus()).body(new MessageResponse(e.getMessage()));
     }
     return ResponseEntity.ok(transactionService.buyCartItems(transactionRequest));
+  }
+
+  @PreAuthorize("hasRole('ADMIN', 'USER')")
+  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity findAll(@PathVariable("id") Long id) {
+    try {
+      return ResponseEntity.ok(orderService.findById(id));
+    } catch (ServiceResponseException e) {
+      return ResponseEntity.status(e.getStatus()).body(new MessageResponse(e.getMessage()));
+    }
   }
 }

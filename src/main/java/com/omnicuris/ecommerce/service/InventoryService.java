@@ -66,4 +66,8 @@ public class InventoryService {
 
 
   }
+
+  public List<Inventory> findAll() {
+    return inventoryRepository.findAll();
+  }
 }
